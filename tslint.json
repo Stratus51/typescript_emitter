@@ -1,0 +1,41 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "linterOptions": {
+      "exclude": [
+        "node_modules/**",
+        "bin/**"
+      ]
+    },
+    "rules": {
+        "object-literal-sort-keys": false,
+        "member-access": false,
+        "no-unused-expression": false,
+        "no-unused-expression-chai": true,
+        "no-any": true,
+        "no-null-keyword": true,
+        "variable-name": [
+          true,
+          "ban-keywords",
+          "check-format",
+          "allow-leading-underscore",
+          "allow-snake-case"
+        ],
+        "whitespace": [
+          false,
+          "check-branch",
+          "check-decl",
+          "check-operator",
+          "check-separator",
+          "check-type"
+        ],
+        "max-classes-per-file": [false, 1],
+        "no-console": [false]
+    },
+    "rulesDirectory": [
+      "tslint-no-unused-expression-chai"
+    ]
+}
