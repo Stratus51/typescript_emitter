@@ -36,17 +36,25 @@ export abstract class Emitter<T> implements IEmitter<T> {
         return this;
     }
 
-    sub_until<U>(
-        subscriber: Subscriber<T, U | undefined>,
-    ): Subscriber<T, void> {
+    sub_until(
+        condition: (packet: T) => boolean,
+        process?: Subscriber<T, void>,
+        wrapper_callback?: (wrapper: Subscriber<T, void>) => void,
+    ) {
         const wrapper = (packet: T) => {
-            const ret = subscriber(packet);
-            if (typeof ret !== "undefined") {
+            const ret = condition(packet);
+            if (ret) {
                 this.unsub(wrapper);
+            }
+            if (process) {
+                process(packet);
             }
         };
         this.sub(wrapper);
-        return wrapper;
+        if (wrapper_callback) {
+            wrapper_callback(wrapper);
+        }
+        return this;
     }
 }
 
