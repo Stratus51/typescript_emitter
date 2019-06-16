@@ -20,7 +20,7 @@ Summary
     - [`.filter(accept: (packet: T) => boolean): Emitter<T>`](#filter)
     - [`.map<U>(convert: (packet: T) => U): Emitter<U>`](#map)
     - [`.relay(source: Emitter<T>): this`](#relay)
-    - [`.sub_until<U>(condition: (packet: T) => U | undefined, timeout?: number, end_callback: (result?: U) => void) => boolean)`](#sub_until)
+    - [`.sub_until<U>(condition: (packet: T) => U | undefined, timeout?: number): Promise<U | undefined>`](#sub_until)
 - [Available emitters](#Emitters)
     - [ImmediateEmitter](#ImmediateEmitter)
     - [AsynchronousEmitter](#AsynchronousEmitter)
@@ -56,15 +56,15 @@ a new type of packet and forward those to its subscribed callbacks.
 ### <a name=relay>`.relay(source: Emitter<T>): this`</a>
 Subscribe to another emitter and relay its packets to our subscribes callbacks.
 
-### <a name=sub_until>`.sub_until<U>(condition: (packet: T) => U | undefined, timeout?: number, end_callback: (result?: U) => void) => boolean)`
-Subscribes a the `condition` callback to this emitter until it returns any
+### <a name=sub_until>`.sub_until<U>(condition: (packet: T) => U | undefined, timeout?: number): Promise<U | undefined>`
+Subscribes the `condition` callback to this emitter until it returns any
 value that is not `undefined`.
 - The `timeout` optional parameter allows the `condition` to be unsubscribed
 after `timeout` seconds even if it never returned non `undefined` result.
-- The `end_callback` optional callback will be called upon unsubscription of
-the `condition` callback. If the unsubscription occured due to the `condition`
-succeeding, the `end_callback` will be given the resulting value. If the
-unsubscription was triggered by a timeout the `result` will be `undefined`.
+- The return value is a promise that will resolve when the `condition` is
+unsubscribed. If it was due to the `condition` succeeding, the promise
+resolves to the result returned by `condition`. Else (`timeout`) it resolves
+to `undefined`.
 
 <a name=Emitters>Available emitters</a>
 ===============================================================================
