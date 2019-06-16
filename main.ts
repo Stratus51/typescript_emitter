@@ -12,7 +12,6 @@ export interface IEmitter<T> {
 }
 
 export abstract class Emitter<T> implements IEmitter<T> {
-    abstract new_emitter<U>(): Emitter<U>;
     abstract sub(subscriber: Subscriber<T, void>): Emitter<T>;
     abstract unsub(subscriber: Subscriber<T, void>): boolean;
     abstract emit(packet: T): Emitter<T>;
@@ -62,14 +61,12 @@ export abstract class Emitter<T> implements IEmitter<T> {
             return this;
         });
     }
+    protected abstract new_emitter<U>(): Emitter<U>;
 }
 
 // Specific emitter definition
 export class ImmediateEmitter<T> extends Emitter<T> {
     subscribers: Array<Subscriber<T, void>> = [];
-    new_emitter<U>() {
-        return new ImmediateEmitter<U>();
-    }
     sub(subscriber: Subscriber<T, void>) {
         this.subscribers.push(subscriber);
         return this;
@@ -83,13 +80,13 @@ export class ImmediateEmitter<T> extends Emitter<T> {
         this.subscribers.forEach((s) => s(packet));
         return this;
     }
+    protected new_emitter<U>() {
+        return new ImmediateEmitter<U>();
+    }
 }
 
 export class AsynchronousEmitter<T> extends Emitter<T> {
     subscribers: Array<Subscriber<T, void>> = [];
-    new_emitter<U>() {
-        return new AsynchronousEmitter<U>();
-    }
     sub(subscriber: Subscriber<T, void>) {
         this.subscribers.push(subscriber);
         return this;
@@ -102,5 +99,8 @@ export class AsynchronousEmitter<T> extends Emitter<T> {
     emit(packet: T) {
         process.nextTick(() => this.subscribers.forEach((s) => s(packet)));
         return this;
+    }
+    protected new_emitter<U>() {
+        return new AsynchronousEmitter<U>();
     }
 }
