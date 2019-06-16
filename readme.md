@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.com/Stratus51/typescript_emitter.svg?branch=master)](https://travis-ci.com/Stratus51/typescript_emitter)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![npm version](https://badge.fury.io/js/%40stratus51%2Femitter.svg)](https://badge.fury.io/js/%40stratus51%2Femitter)
+[![codecov](https://codecov.io/gh/Stratus51/typescript_emitter/branch/master/graph/badge.svg)](https://codecov.io/gh/Stratus51/typescript_emitter)
 
 Implementation of a Typescript class representing an object capable of pushing packets to a list of callbacks.
 It was designed mainly to handle easily typed events.
