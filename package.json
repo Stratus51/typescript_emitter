@@ -7,7 +7,7 @@
     "scripts": {
         "lint-check": "node_modules/tslint/bin/tslint --project .",
         "pretty-check": "node_modules/prettier/bin-prettier.js --check '**/*.ts'",
-        "test": "JUNIT_REPORT_PATH=report.xml ts-mocha --colors --reporter mocha-jenkins-reporter test.ts",
+        "test": "./node_modules/nyc/bin/nyc.js ts-mocha --colors test.ts",
         "start": "./node_modules/ts-node/dist/bin.js main.ts",
         "prepublish": "./node_modules/.bin/tsc && npm test"
     },
@@ -21,6 +21,7 @@
         "chai": "^4.2.0",
         "mocha": "^6.0.2",
         "mocha-jenkins-reporter": "^0.4.1",
+        "nyc": "^14.1.1",
         "prettier": "^1.16.4",
         "ts-mocha": "^6.0.0",
         "ts-node": "^8.0.2",
@@ -28,5 +29,22 @@
         "tslint-no-unused-expression-chai": "^0.1.4",
         "typescript": "^3.3.3333"
     },
-    "dependencies": {}
+    "dependencies": {},
+    "nyc": {
+        "extension": [
+            ".ts",
+            ".tsx"
+        ],
+        "exclude": [
+            "**/*.d.ts",
+            "bin",
+            "examples",
+            "**/*.js"
+        ],
+        "reporter": [
+            "text",
+            "lcov"
+        ],
+        "all": true
+    }
 }
