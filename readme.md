@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/Stratus51/typescript_emitter.svg?branch=master)](https://travis-ci.com/Stratus51/typescript_emitter)
+
 Implementation of a Typescript class representing an object capable of pushing packets to a list of callbacks.
 It was designed mainly to handle easily typed events.
 
