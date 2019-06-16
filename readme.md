@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/%40stratus51%2Femitter.svg)](https://badge.fury.io/js/%40stratus51%2Femitter)
 [![codecov](https://codecov.io/gh/Stratus51/typescript_emitter/branch/master/graph/badge.svg)](https://codecov.io/gh/Stratus51/typescript_emitter)
 
-Implementation of a Typescript class representing an object capable of pushing packets to a list of callbacks.
+Implementation of some Typescript classes representing objects capable of pushing packets to a list of callbacks.
 It was designed mainly to handle easily typed events.
 
 [npm repository](https://www.npmjs.com/package/@stratus51/emitter)
@@ -27,11 +27,11 @@ Summary
 
 <a name=EmitterMethods>Emitters methods</a>
 ===============================================================================
-There is no instanciable Emitter class in this package. Instead there are 2
-[emitters](#Emitters) implementing the same methods which are listed here.
+Each [concrete emitter class](#Emitters) implements the abstract methods
+defined by the abstract `Emitter<T>` class, which are listed below.
 
-In typescript, an emitter can emit only one type of packets (represented by a
-generic type `T`) to allow type checking.
+In the typescript version of the library, an emitter can emit only one type of
+packets (represented by a generic type `T`) to allow type checking.
 
 ### <a name=sub>`.sub(callback: (packet: T) => void): this`</a>
 Subscribes a callback to this emitter. The callback will then be called
@@ -39,8 +39,8 @@ whenever this emitter emits any packet.
 
 ### <a name=unsub>`.unsub(callback: (packet: T) => void): boolean`</a>
 Unsubscribes the callback from the emitter. It will no longer be called upon
-the emitter packet emissions.
-Return whether the callback was subscribed or not.
+this emitter's packet emissions.
+Returns whether the callback was subscribed or not.
 
 ### <a name=emit>`.emit(packet: T): this`</a>
 Emits a packet to all the callbacks subscribed to the emitter.
