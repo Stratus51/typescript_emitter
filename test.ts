@@ -321,7 +321,7 @@ function test_emitter_complex_methods<T>(
                 return { abc: 5 };
             }
             return;
-        }, 60 * 60 * 1000);
+        });
 
         // Emit packets
         packets.forEach((packet) => emitter.emit(packet));
@@ -356,6 +356,9 @@ function test_emitter_complex_methods<T>(
             return;
         }, 1000);
 
+        // Emit a single packet
+        emitter.emit(packets[0]);
+
         // Wait for timeout
         const res = await pres;
 
@@ -371,7 +374,7 @@ function test_emitter_complex_methods<T>(
         expect(
             listener.received_packets,
             "Listener did not receive the correct packets.",
-        ).to.deep.equal(packets.slice(0, 0));
+        ).to.deep.equal(packets.slice(0, 1));
         expect(res).to.equal(undefined);
     });
 }
