@@ -5,6 +5,8 @@ It was designed mainly to handle easily typed events.
 
 [github repository](https://github.com/Stratus51/typescript_emitter)
 
+[examples](https://github.com/Stratus51/typescript_emitter/tree/master/examples)
+
 Summary
 - [Emitters methods](#EmitterMethods)
     - [`.sub(callback: (packet: T) => void): this`](#sub)
