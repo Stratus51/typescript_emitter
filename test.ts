@@ -57,11 +57,6 @@ function test_emitter_base_requirements<T>(
     emission_done?: CheckEmissionDone,
 ) {
     describe("base methods should succeed", () => {
-        it("new_emitter", () => {
-            const emitter = new emitter_class();
-            const ret = emitter.new_emitter();
-            expect(ret, "should return a new emitter").to.not.equal(emitter);
-        });
         it("sub", () => {
             const emitter = new emitter_class();
             const ret = emitter.sub(() => {
