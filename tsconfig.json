@@ -1,72 +1,62 @@
 {
-  "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
-    "lib": ["es2017"],
-    // "allowJs": true,
-    // "checkJs": true,
-    // "jsx": "preserve",
-    "declaration": true,
-    // "declarationMap": true,
-    // "sourceMap": true,
-    // "outFile": "./",
-    "outDir": "bin",
-    "rootDir": ".",
-    // "composite": true,
-    // "removeComments": true,
-    // "noEmit": true,
-    // "importHelpers": true,
-    // "downlevelIteration": true,
-    // "isolatedModules": true,
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "commonjs",
+        "lib": ["es2017"],
+        // "allowJs": true,
+        // "checkJs": true,
+        // "jsx": "preserve",
+        "declaration": true,
+        // "declarationMap": true,
+        // "sourceMap": true,
+        // "outFile": "./",
+        "outDir": "bin",
+        "rootDir": ".",
+        // "composite": true,
+        // "removeComments": true,
+        // "noEmit": true,
+        // "importHelpers": true,
+        // "downlevelIteration": true,
+        // "isolatedModules": true,
 
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
 
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        // "noFallthroughCasesInSwitch": true,
 
+        "moduleResolution": "node",
+        // "baseUrl": "./",
+        // "paths": {},
+        // "rootDirs": [],
+        // "typeRoots": [],
+        // "types": [],
+        // "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        // "preserveSymlinks": true,
 
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    // "noFallthroughCasesInSwitch": true,
+        // "sourceRoot": "",
+        // "mapRoot": "",
+        // "inlineSourceMap": true,
+        // "inlineSources": true,
 
+        // "experimentalDecorators": true,
+        // "emitDecoratorMetadata": true,
 
-    "moduleResolution": "node",
-    // "baseUrl": "./",
-    // "paths": {},
-    // "rootDirs": [],
-    // "typeRoots": [],
-    // "types": [],
-    // "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    // "preserveSymlinks": true,
-
-
-    // "sourceRoot": "",
-    // "mapRoot": "",
-    // "inlineSourceMap": true,
-    // "inlineSources": true,
-
-
-    // "experimentalDecorators": true,
-    // "emitDecoratorMetadata": true,
-
-
-    "resolveJsonModule": true,
-    // types option has been previously configured
-     "types": [
-        "node",
-        "mocha"
-     ],
-     // typeRoots option has been previously configured
-     "typeRoots": [
-        // add path to @types
-        "node_modules/@types"
-     ]
-  }
+        "resolveJsonModule": true,
+        // types option has been previously configured
+        "types": ["node", "mocha"],
+        // typeRoots option has been previously configured
+        "typeRoots": [
+            // add path to @types
+            "node_modules/@types"
+        ]
+    }
 }
-
