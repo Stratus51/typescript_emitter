@@ -1,6 +1,6 @@
 {
     "name": "@stratus51/emitter",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "Packet emitter tools and classes",
     "main": "bin/main.js",
     "types": "bin/main.d.ts",
@@ -9,7 +9,7 @@
         "pretty-check": "node_modules/prettier/bin-prettier.js --check '**/*.ts'",
         "test": "JUNIT_REPORT_PATH=report.xml ts-mocha --colors --reporter mocha-jenkins-reporter test.ts",
         "start": "./node_modules/ts-node/dist/bin.js main.ts",
-        "prepublish": "./node_modules/.bin/tsc"
+        "prepublish": "./node_modules/.bin/tsc && npm test"
     },
     "author": "Igor <igor_valet@hotmail.com>",
     "license": "MIT",
