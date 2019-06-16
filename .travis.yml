@@ -1,9 +1,7 @@
 language: node_js
 node_js:
     - "11"
-env:
-    - CODECOV_TOKEN="c11de148-9149-4140-b663-9aa5607660eb"
-scripts:
-    - npm install codecov -g
+script:
+    - npm install -g codecov
 after_success:
-    - cp coverage/coverage-final.json coverage/coverage.json && codecov
+    - codecov -t c11de148-9149-4140-b663-9aa5607660eb
