@@ -36,25 +36,31 @@ export abstract class Emitter<T> implements IEmitter<T> {
         return this;
     }
 
-    sub_until(
-        condition: (packet: T) => boolean,
-        process?: Subscriber<T, void>,
-        wrapper_callback?: (wrapper: Subscriber<T, void>) => void,
-    ) {
-        const wrapper = (packet: T) => {
-            const ret = condition(packet);
-            if (ret) {
+    sub_until<U>(
+        condition: (packet: T) => U | undefined,
+        timeout?: number,
+    ): Promise<U | undefined> {
+        return new Promise((resolve) => {
+            let timer: NodeJS.Timer | undefined;
+            const wrapper = (packet: T) => {
+                const res = condition(packet);
+                if (typeof res !== "undefined") {
+                    unsub(res);
+                }
+            };
+            const unsub = (result?: U) => {
                 this.unsub(wrapper);
+                if (typeof timer !== "undefined") {
+                    clearTimeout(timer);
+                }
+                resolve(result);
+            };
+            this.sub(wrapper);
+            if (typeof timeout === "number") {
+                timer = setTimeout(() => unsub(), timeout);
             }
-            if (process) {
-                process(packet);
-            }
-        };
-        this.sub(wrapper);
-        if (wrapper_callback) {
-            wrapper_callback(wrapper);
-        }
-        return this;
+            return this;
+        });
     }
 }
 

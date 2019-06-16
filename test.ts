@@ -314,7 +314,50 @@ function test_emitter_complex_methods<T>(
 
         // Subscribe temporarily
         let i = 0;
-        emitter.sub_until(() => ++i >= packets.length / 2, listener.callback);
+        const limit = Math.floor((packets.length + 1) / 2);
+        const pres = emitter.sub_until((packet) => {
+            listener.callback(packet);
+            if (++i >= limit) {
+                return { abc: 5 };
+            }
+            return;
+        }, 60 * 60 * 1000);
+
+        // Emit packets
+        packets.forEach((packet) => emitter.emit(packet));
+
+        // Wait for propagation if necessary
+        if (emission_done) {
+            await emission_done([emitter], [listener]);
+        }
+        const res = await pres;
+
+        // Check the received packets
+        expect(
+            listener.received_packets,
+            "Listener did not receive the correct packets.",
+        ).to.deep.equal(packets.slice(0, limit));
+        expect(res).to.deep.equal({ abc: 5 });
+    });
+
+    it("sub_until timeout", async () => {
+        // Create emitter and listener
+        const emitter = new emitter_class();
+        const listener = build_packet_listener<T>();
+
+        // Subscribe temporarily
+        let i = 0;
+        const limit = Math.floor((packets.length + 1) / 2);
+        const pres = emitter.sub_until((packet) => {
+            listener.callback(packet);
+            if (++i >= limit) {
+                return true;
+            }
+            return;
+        }, 1000);
+
+        // Wait for timeout
+        const res = await pres;
 
         // Emit packets
         packets.forEach((packet) => emitter.emit(packet));
@@ -328,43 +371,8 @@ function test_emitter_complex_methods<T>(
         expect(
             listener.received_packets,
             "Listener did not receive the correct packets.",
-        ).to.deep.equal(packets.slice(0, Math.floor((packets.length + 1) / 2)));
-    });
-
-    it("sub_until early cancel", async () => {
-        // Create emitter and listener
-        const emitter = new emitter_class();
-        const listener = build_packet_listener<T>();
-
-        // Subscribe temporarily
-        let i = 0;
-        let wrapper: (packet: T) => void = () => void 0;
-        emitter.sub_until(
-            () => ++i >= packets.length / 2,
-            listener.callback,
-            (w) => (wrapper = w),
-        );
-
-        // Emit first packet
-        emitter.emit(packets[0]);
-        if (emission_done) {
-            await emission_done([emitter], [listener]);
-        }
-        emitter.unsub(wrapper);
-
-        // Emit other packets
-        packets.slice(1).forEach((packet) => emitter.emit(packet));
-
-        // Wait for propagation if necessary
-        if (emission_done) {
-            await emission_done([emitter], [listener]);
-        }
-
-        // Check the received packets
-        expect(
-            listener.received_packets,
-            "Listener did not receive the correct packets.",
-        ).to.deep.equal(packets.slice(0, 1));
+        ).to.deep.equal(packets.slice(0, 0));
+        expect(res).to.equal(undefined);
     });
 }
 
