@@ -1,31 +1,31 @@
 {
-  "name": "emitter",
-  "version": "0.0.1",
-  "description": "Packet emitter tools and classes",
-  "main": "bin/main.js",
-  "types": "bin/main.d.ts",
-  "scripts": {
-    "lint-check": "node_modules/tslint/bin/tslint --project .",
-    "pretty-check": "node_modules/prettier/bin-prettier.js --check '**/*.ts'",
-    "test": "JUNIT_REPORT_PATH=report.xml ts-mocha --colors --reporter mocha-jenkins-reporter test.ts",
-    "start": "./node_modules/ts-node/dist/bin.js main.ts"
-  },
-  "author": "Igor <igor_valet@hotmail.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.6",
-    "@types/node": "^11.13.13",
-    "@types/yargs": "^12.0.9",
-    "chai": "^4.2.0",
-    "mocha": "^6.0.2",
-    "mocha-jenkins-reporter": "^0.4.1",
-    "prettier": "^1.16.4",
-    "ts-mocha": "^6.0.0",
-    "ts-node": "^8.0.2",
-    "tslint": "^5.14.0",
-    "tslint-no-unused-expression-chai": "^0.1.4",
-    "typescript": "^3.3.3333"
-  },
-  "dependencies": {}
+    "name": "@stratus51/emitter",
+    "version": "0.0.1",
+    "description": "Packet emitter tools and classes",
+    "main": "bin/main.js",
+    "types": "bin/main.d.ts",
+    "scripts": {
+        "lint-check": "node_modules/tslint/bin/tslint --project .",
+        "pretty-check": "node_modules/prettier/bin-prettier.js --check '**/*.ts'",
+        "test": "JUNIT_REPORT_PATH=report.xml ts-mocha --colors --reporter mocha-jenkins-reporter test.ts",
+        "start": "./node_modules/ts-node/dist/bin.js main.ts"
+    },
+    "author": "Igor <igor_valet@hotmail.com>",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/chai": "^4.1.7",
+        "@types/mocha": "^5.2.6",
+        "@types/node": "^11.13.13",
+        "@types/yargs": "^12.0.9",
+        "chai": "^4.2.0",
+        "mocha": "^6.0.2",
+        "mocha-jenkins-reporter": "^0.4.1",
+        "prettier": "^1.16.4",
+        "ts-mocha": "^6.0.0",
+        "ts-node": "^8.0.2",
+        "tslint": "^5.14.0",
+        "tslint-no-unused-expression-chai": "^0.1.4",
+        "typescript": "^3.3.3333"
+    },
+    "dependencies": {}
 }
