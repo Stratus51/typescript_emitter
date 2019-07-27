@@ -1,6 +1,6 @@
 {
     "name": "@stratus51/emitter",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Packet emitter tools and classes",
     "main": "bin/main.js",
     "types": "bin/main.d.ts",
