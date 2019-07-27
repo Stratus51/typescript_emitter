@@ -38,9 +38,9 @@ export abstract class Emitter<T> implements IEmitter<T> {
 
     raw_sub_until<U>(
         condition: (packet: T) => U | undefined,
-        end_callback: (result: U | undefined) => void,
+        end_callback?: (result: U | undefined) => void,
         timeout?: number,
-    ): void {
+    ) {
         let timer: NodeJS.Timer | undefined;
         const wrapper = (packet: T) => {
             const res = condition(packet);
@@ -53,12 +53,15 @@ export abstract class Emitter<T> implements IEmitter<T> {
             if (typeof timer !== "undefined") {
                 clearTimeout(timer);
             }
-            end_callback(result);
+            if (end_callback) {
+                end_callback(result);
+            }
         };
         this.sub(wrapper);
         if (typeof timeout === "number") {
             timer = setTimeout(() => unsub(), timeout);
         }
+        return this;
     }
 
     sub_until<U>(
