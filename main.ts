@@ -8,30 +8,30 @@ export type Subscriber<T, U> = (packet: T) => U;
 export interface IEmitter<T> {
     sub: (subscriber: Subscriber<T, void>) => IEmitter<T>;
     unsub: (subscriber: Subscriber<T, void>) => boolean;
-    emit: (packet: T) => IEmitter<T>;
+    pub: (packet: T) => IEmitter<T>;
 }
 
 export abstract class Emitter<T> implements IEmitter<T> {
     abstract sub(subscriber: Subscriber<T, void>): Emitter<T>;
     abstract unsub(subscriber: Subscriber<T, void>): boolean;
-    abstract emit(packet: T): Emitter<T>;
+    abstract pub(packet: T): Emitter<T>;
 
     filter(accept: (packet: T) => boolean) {
         const ret = this.new_emitter<T>();
         this.sub((packet) => {
             if (accept(packet)) {
-                ret.emit(packet);
+                ret.pub(packet);
             }
         });
         return ret;
     }
     map<U>(convert: (packet: T) => U) {
         const ret = this.new_emitter<U>();
-        this.sub((packet) => ret.emit(convert(packet)));
+        this.sub((packet) => ret.pub(convert(packet)));
         return ret;
     }
     relay(source: Emitter<T>) {
-        source.sub((packet) => this.emit(packet));
+        source.sub((packet) => this.pub(packet));
         return this;
     }
 
@@ -76,7 +76,7 @@ export class ImmediateEmitter<T> extends Emitter<T> {
         this.subscribers = this.subscribers.filter((s) => s !== subscriber);
         return initial_length !== this.subscribers.length;
     }
-    emit(packet: T) {
+    pub(packet: T) {
         this.subscribers.forEach((s) => s(packet));
         return this;
     }
@@ -96,7 +96,7 @@ export class AsynchronousEmitter<T> extends Emitter<T> {
         this.subscribers = this.subscribers.filter((s) => s !== subscriber);
         return initial_length !== this.subscribers.length;
     }
-    emit(packet: T) {
+    pub(packet: T) {
         process.nextTick(() => this.subscribers.forEach((s) => s(packet)));
         return this;
     }

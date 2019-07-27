@@ -76,7 +76,7 @@ function test_emitter_base_requirements<T>(
         });
         it("emit", () => {
             const emitter = new emitter_class();
-            const ret = emitter.emit(packets[0]);
+            const ret = emitter.pub(packets[0]);
             expect(ret, "should return the emitter").to.equal(emitter);
         });
     });
@@ -96,7 +96,7 @@ function test_emitter_base_requirements<T>(
                 );
 
                 // Emit the packets
-                fwd_packets.forEach((packet) => emitter.emit(packet));
+                fwd_packets.forEach((packet) => emitter.pub(packet));
 
                 // Wait for propagation if necessary
                 if (emission_done) {
@@ -145,7 +145,7 @@ function test_emitter_base_requirements<T>(
             );
 
             // Emit the packets
-            packets.forEach((packet) => emitter.emit(packet));
+            packets.forEach((packet) => emitter.pub(packet));
 
             // Wait for propagation if necessary
             if (emission_done) {
@@ -192,7 +192,7 @@ function test_emitter_base_requirements<T>(
             // Emit packets
             packets.forEach((_, packet_i) =>
                 channels.forEach(({ emitter }, channel_i) =>
-                    emitter.emit(packet_lists[channel_i][packet_i]),
+                    emitter.pub(packet_lists[channel_i][packet_i]),
                 ),
             );
 
@@ -235,7 +235,7 @@ function test_emitter_complex_methods<T>(
             .sub(listener.callback);
 
         // Emit packets
-        packets.forEach((packet) => emitter.emit(packet));
+        packets.forEach((packet) => emitter.pub(packet));
 
         // Wait for propagation if necessary
         if (emission_done) {
@@ -259,7 +259,7 @@ function test_emitter_complex_methods<T>(
         second_emitter.relay(emitter).sub(listener.callback);
 
         // Emit packets
-        packets.forEach((packet) => emitter.emit(packet));
+        packets.forEach((packet) => emitter.pub(packet));
 
         // Wait for propagation if necessary
         if (emission_done) {
@@ -288,7 +288,7 @@ function test_emitter_complex_methods<T>(
         const filter = emitter.filter(build_filter()).sub(listener.callback);
 
         // Emit packets
-        packets.forEach((packet) => emitter.emit(packet));
+        packets.forEach((packet) => emitter.pub(packet));
 
         // Wait for propagation if necessary
         if (emission_done) {
@@ -319,7 +319,7 @@ function test_emitter_complex_methods<T>(
         });
 
         // Emit packets
-        packets.forEach((packet) => emitter.emit(packet));
+        packets.forEach((packet) => emitter.pub(packet));
 
         // Wait for propagation if necessary
         if (emission_done) {
@@ -352,13 +352,13 @@ function test_emitter_complex_methods<T>(
         }, 1000);
 
         // Emit a single packet
-        emitter.emit(packets[0]);
+        emitter.pub(packets[0]);
 
         // Wait for timeout
         const res = await pres;
 
         // Emit packets
-        packets.forEach((packet) => emitter.emit(packet));
+        packets.forEach((packet) => emitter.pub(packet));
 
         // Wait for propagation if necessary
         if (emission_done) {
