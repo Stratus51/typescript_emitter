@@ -6,5 +6,5 @@ emitter.filter((n) => n % 2 === 0).sub((p) => console.log("Receiving", p));
 
 for (let i = 0; i < 10; ++i) {
     console.log("Emitting", i);
-    emitter.emit(i);
+    emitter.pub(i);
 }
