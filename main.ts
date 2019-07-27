@@ -35,31 +35,38 @@ export abstract class Emitter<T> implements IEmitter<T> {
         return this;
     }
 
+    raw_sub_until<U>(
+        condition: (packet: T) => U | undefined,
+        end_callback: (result: U | undefined) => void,
+        timeout?: number,
+    ): void {
+        let timer: NodeJS.Timer | undefined;
+        const wrapper = (packet: T) => {
+            const res = condition(packet);
+            if (typeof res !== "undefined") {
+                unsub(res);
+            }
+        };
+        const unsub = (result?: U) => {
+            this.unsub(wrapper);
+            if (typeof timer !== "undefined") {
+                clearTimeout(timer);
+            }
+            end_callback(result);
+        };
+        this.sub(wrapper);
+        if (typeof timeout === "number") {
+            timer = setTimeout(() => unsub(), timeout);
+        }
+    }
+
     sub_until<U>(
         condition: (packet: T) => U | undefined,
         timeout?: number,
     ): Promise<U | undefined> {
-        return new Promise((resolve) => {
-            let timer: NodeJS.Timer | undefined;
-            const wrapper = (packet: T) => {
-                const res = condition(packet);
-                if (typeof res !== "undefined") {
-                    unsub(res);
-                }
-            };
-            const unsub = (result?: U) => {
-                this.unsub(wrapper);
-                if (typeof timer !== "undefined") {
-                    clearTimeout(timer);
-                }
-                resolve(result);
-            };
-            this.sub(wrapper);
-            if (typeof timeout === "number") {
-                timer = setTimeout(() => unsub(), timeout);
-            }
-            return this;
-        });
+        return new Promise((resolve) =>
+            this.raw_sub_until(condition, resolve, timeout),
+        );
     }
     protected abstract new_emitter<U>(): Emitter<U>;
 }
