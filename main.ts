@@ -12,6 +12,7 @@ export interface IEmitter<T> {
 }
 
 export abstract class Emitter<T> implements IEmitter<T> {
+    callback?: (packet: T) => void;
     abstract sub(subscriber: Subscriber<T, void>): Emitter<T>;
     abstract unsub(subscriber: Subscriber<T, void>): boolean;
     abstract pub(packet: T): Emitter<T>;
@@ -67,6 +68,12 @@ export abstract class Emitter<T> implements IEmitter<T> {
         return new Promise((resolve) =>
             this.raw_sub_until(condition, resolve, timeout),
         );
+    }
+    as_callback() {
+        if (!this.callback) {
+            this.callback = (packet) => this.pub(packet);
+        }
+        return this.callback;
     }
     protected abstract new_emitter<U>(): Emitter<U>;
 }
