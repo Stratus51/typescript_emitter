@@ -12,7 +12,7 @@ receivers.forEach((receiver) => emitter.sub(receiver));
 // Emitting packets
 console.log("Emitting 5 packets");
 for (let i = 0; i < 5; ++i) {
-    emitter.emit("Packet " + i);
+    emitter.pub("Packet " + i);
 }
 
 // Unsubscribing part of the receivers
@@ -24,5 +24,5 @@ for (let i = 1; i < receivers.length; ++i) {
 // Emitting packets
 console.log("Emitting 5 packets");
 for (let i = 0; i < 5; ++i) {
-    emitter.emit("Packet " + i);
+    emitter.pub("Packet " + i);
 }
