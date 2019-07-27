@@ -6,10 +6,6 @@
 Implementation of some Typescript classes representing objects capable of pushing packets to a list of callbacks.
 It was primarily designed to handle internal events.
 
-[npm repository](https://www.npmjs.com/package/@stratus51/emitter)
-
-[github repository](https://github.com/Stratus51/typescript_emitter)
-
 [examples](https://github.com/Stratus51/typescript_emitter/tree/master/examples)
 
 Summary
