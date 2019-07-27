@@ -372,6 +372,28 @@ function test_emitter_complex_methods<T>(
         ).to.deep.equal(packets.slice(0, 1));
         expect(res).to.equal(undefined);
     });
+
+    it("as_callback", async () => {
+        // Create emitter and listener
+        const emitter = new emitter_class();
+        const listener = build_packet_listener<T>();
+
+        const callback = emitter.sub(listener.callback).as_callback();
+
+        // Emit packets
+        packets.forEach((packet) => callback(packet));
+
+        // Wait for propagation if necessary
+        if (emission_done) {
+            await emission_done([emitter], [listener]);
+        }
+
+        // Check the received packets
+        expect(
+            listener.received_packets,
+            "Listener did not receive the correct packets.",
+        ).to.deep.equal(packets);
+    });
 }
 
 function test_emitter_with_data<T>(
