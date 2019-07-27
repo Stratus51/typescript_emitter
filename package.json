@@ -15,19 +15,19 @@
     "license": "MIT",
     "devDependencies": {
         "@types/chai": "^4.1.7",
-        "@types/mocha": "^5.2.6",
-        "@types/node": "^11.13.13",
-        "@types/yargs": "^12.0.9",
+        "@types/mocha": "^5.2.7",
+        "@types/node": "^11.13.18",
+        "@types/yargs": "^12.0.12",
         "chai": "^4.2.0",
-        "mocha": "^6.0.2",
+        "mocha": "^6.2.0",
         "mocha-jenkins-reporter": "^0.4.1",
         "nyc": "^14.1.1",
-        "prettier": "^1.16.4",
+        "prettier": "^1.18.2",
         "ts-mocha": "^6.0.0",
-        "ts-node": "^8.0.2",
-        "tslint": "^5.14.0",
+        "ts-node": "^8.3.0",
+        "tslint": "^5.18.0",
         "tslint-no-unused-expression-chai": "^0.1.4",
-        "typescript": "^3.3.3333"
+        "typescript": "^3.5.3"
     },
     "dependencies": {},
     "nyc": {
