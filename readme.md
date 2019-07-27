@@ -16,11 +16,13 @@ Summary
 - [Emitters methods](#EmitterMethods)
     - [`.sub(callback: (packet: T) => void): this`](#sub)
     - [`.unsub(callback: (packet: T) => void): boolean`](#unsub)
-    - [`.emit(packet: T): this`](#emit)
+    - [`.pub(packet: T): this`](#pub)
     - [`.filter(accept: (packet: T) => boolean): Emitter<T>`](#filter)
     - [`.map<U>(convert: (packet: T) => U): Emitter<U>`](#map)
     - [`.relay(source: Emitter<T>): this`](#relay)
     - [`.sub_until<U>(condition: (packet: T) => U | undefined, timeout?: number): Promise<U | undefined>`](#sub_until)
+    - [`.raw_sub_until<U>(condition: (packet: T) => U | undefined, end_callback?: (result: U | undefined) => void, timeout?: number): this`](#raw_sub_until)
+    - [`.as_callback(): (packet: T) => void`](#as_callback)
 - [Available emitters](#Emitters)
     - [ImmediateEmitter](#ImmediateEmitter)
     - [AsynchronousEmitter](#AsynchronousEmitter)
@@ -43,7 +45,7 @@ Unsubscribes the callback from the emitter. It will no longer be called upon
 this emitter's packet emissions.
 Returns whether the callback was subscribed or not.
 
-### <a name=emit>`.emit(packet: T): this`</a>
+### <a name=pub>`.pub(packet: T): this`</a>
 Makes the emitter emit a packet. It will trigger all the callbacks currently
 subscribed to the emitter.
 
@@ -68,14 +70,22 @@ unsubscribed. If it was due to the `condition` succeeding, the promise
 resolves to the result returned by `condition`. Else, on timeout it resolves
 to `undefined`.
 
+### <a name=raw_sub_until>`.raw_sub_until<U>(condition: (packet: T) => U | undefined, end_callback?: (U | undefined) => void, timeout?: number): this`
+Same as [`sub_until`](#sub_until) but using an optional callback to catch the end of subscription
+instead of a promise. This can save memory, would it be required.
+
+### <a name=as_callback>`.as_callback(): (packet: T) => void`</a>
+Builds a callback feeding this emitter. The callback is built on the first call and then passed to any
+subsequent calls.
+
 <a name=Emitters>Available emitters</a>
 ===============================================================================
 <a name=ImmediateEmitter>ImmediateEmitter</a>
 -------------------------------------------------------------------------------
 Emitter implementation that triggers all the subscribed callbacks during the
-[`.emit`](#emit) method call.
+[`.pub`](#pub) method call.
 
 <a name=AsynchronousEmitter>AsynchronousEmitter</a>
 -------------------------------------------------------------------------------
 Emitter implementation that triggers all the subscribed callbacks one tick after
-the [`.emit`](#emit) method call (using `process.nextTick()`).
+the [`.pub`](#pub) method call (using `process.nextTick()`).
