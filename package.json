@@ -20,7 +20,7 @@
         "@types/node": "^11.13.18",
         "@types/yargs": "^12.0.12",
         "chai": "^4.2.0",
-        "mocha": "^6.2.0",
+        "mocha": "^10.2.0",
         "mocha-jenkins-reporter": "^0.4.1",
         "nyc": "^14.1.1",
         "prettier": "^1.18.2",
